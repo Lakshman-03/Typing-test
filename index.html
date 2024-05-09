@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Typing Speed Test</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
+      }
+      
+      .container {
+        max-width: 600px;
+        margin: 50px auto;
+        text-align: center;
+        background-color: #f0f0f0;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 5px 5px 15px #c7c7c7, 
+                    -5px -5px 15px #ffffff; 
+      }
+
+      h1 {
+        color: #333;
+      }
+      
+      textarea {
+        margin-top: 20px;
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: none;
+        background-color: #f0f0f0; 
+        border-radius: 10px;
+        box-shadow: inset 5px 5px 15px #c7c7c7, 
+                    inset -5px -5px 15px #ffffff; 
+      }
+      
+      button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 10px;
+        box-shadow: 5px 5px 15px #c7c7c7, 
+                    -5px -5px 15px #ffffff;
+      }
+      
+      button:hover {
+        background-color: #0056b3;
+      }
+      
+      #result {
+        margin-top: 20px;
+        font-size: 20px;
+        font-weight: bold;
+      }
+      
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Type the following text:</h1>
+    <p id="quote">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    <button onclick="startTest()">Start Test</button>
+    <textarea id="textInput" rows="4" cols="50" autofocus onkeyup="calculateSpeed()"></textarea>
+    <p id="result"></p>
+  </div>
+  <script src="script.js"></script>
+  <script>
+    var startTime;
+
+    function startTest() {
+      startTime = new Date();
+    }
+
+    function calculateSpeed() {
+      var originalText = document.getElementById("quote").innerText.trim();
+      var enteredText = document.getElementById("textInput").value.trim();
+
+      var words = originalText.split(" ");
+      var enteredWords = enteredText.split(" ");
+      
+      var correctWords = 0;
+      for (var i = 0; i < enteredWords.length; i++) {
+        if (enteredWords[i] === words[i]) {
+          correctWords++;
+        }
+      }
+
+      var accuracy = (correctWords / words.length) * 100;
+
+      var timeInSeconds = (new Date() - startTime) / 1000;
+
+      var wordsPerMinute = Math.round((enteredWords.length / 2) / (timeInSeconds / 60));
+
+      var result = "Your typing speed is " + wordsPerMinute + " words per minute with an accuracy of " + accuracy.toFixed(2) + "%.";
+      document.getElementById("result").innerText = result;
+    }
+  </script>
+</body>
+</html>
